@@ -5,14 +5,21 @@ $mysqli = new mysqli("oniddb.cws.oregonstate.edu", "wrighste-db", "ydEX8evfxykcq
 if ($mysqli->connect_errno) {
 echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 } else {
-	echo "Connection worked!! <br>";
+	//echo "Connection worked!! <br>"; line used for debugging
 }
 	if(empty($_POST['name']))
     {
          echo "Please click the back button in your browser and enter a video name";
     } else if(isset($_POST['deleteall'])){
-		echo "Delete all";
-		DELETE * FROM table_name;
+		//echo "Delete all";
+		// sql to delete a record
+		//TRUNCATE TABLE `table`
+		$sql =  "TRUNCATE TABLE webdev1";//"DELETE FROM MyGuests WHERE id=3";
+		if ($mysqli->query($sql) === TRUE) {
+			echo "All Records deleted successfully";
+		} else {
+			echo "Error deleting record: " . $mysqli->error;
+		}
 	} else {
 	/* Prepared statement, stage 1: prepare -->NAME */ 
 	if (!($stmt = $mysqli->prepare("INSERT INTO webdev1(name,category,length,rented) VALUES (?,?,?,?)"))) {
