@@ -11,10 +11,11 @@ echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->
 if (!($stmt = $mysqli->prepare("INSERT INTO webdev1(id,name,category,length,rented) VALUES (?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 }
-$id = 1;
-$name = "Lost in translation";
-$category = "xyz";
-$length = 120;
+
+$id = $_POST['ID'];
+$name = $_POST['name'];
+$category = $_POST['category'];
+$length = $_POST['length'];
 $rented = 1;
 
 $stmt->bind_param("issii", $id,$name,$category,$length,$rented);
