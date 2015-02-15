@@ -10,8 +10,10 @@ echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->
 	if(empty($_POST['name']))
     {
          echo "Please click the back button in your browser and enter a video name";
-    } else
-	{
+    } else if(isset($_POST['deleteall'])){
+		echo "Delete all";
+		DELETE * FROM table_name;
+	} else {
 	/* Prepared statement, stage 1: prepare -->NAME */ 
 	if (!($stmt = $mysqli->prepare("INSERT INTO webdev1(name,category,length,rented) VALUES (?,?,?,?)"))) {
 		echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
@@ -28,5 +30,14 @@ echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->
 		echo "Movie Name already Exist in Database!";
 		//echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
-}
+   } //closing else block above...if emptyname else if deletpressed...then we land here
+   if (!($stmt = $mysqli->prepare("SELECT name,category,length,rented FROM webdev1"))) {
+    echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+	}
+
+	if (!$stmt->execute()) {
+		echo "Execute failed: (" . $mysqli->errno . ") " . $mysqli->error;
+	}
+	$mysqli->close();
+
 ?>
